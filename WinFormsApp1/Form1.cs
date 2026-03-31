@@ -24,9 +24,12 @@ namespace WinFormsApp1 {
             lstDevices.DataSource = connectedDevices;
             cbTarget.DataSource = connectedDevices;
 
+            // init status strip
             UpdateStatus();
 
+            // attach tcp server callbacks to UI
             WireServerCallbacks();
+
             _server.Start();
             StartSimulator(); // DEBUG FOR SIMULATING DEVICES 
         }
@@ -52,6 +55,7 @@ namespace WinFormsApp1 {
 
 
         private void Form1_Load(object sender, EventArgs e) {
+            // load pretty theme :)
             LoadColors(this);
         }
 
@@ -60,6 +64,7 @@ namespace WinFormsApp1 {
             _server.OnLog = (msg, type) => SafeInvoke(() => AppendLog(msg, type) );
 
 
+            // when a device connects, add it to the list and update the status
             _server.OnDeviceConnected = device => SafeInvoke(() => {
                 _deviceMap[device.Mac] = device;
                 connectedDevices.Add(device.Name);
@@ -67,6 +72,7 @@ namespace WinFormsApp1 {
                 AppendLog($"{device.Name} joined the network.", LogType.Success, true);
             });
 
+            // when a device disconnects, remove it from the list and update the status
             _server.OnDeviceDisconnected = device => SafeInvoke(() => {
                 _deviceMap.Remove(device.Mac);
                 connectedDevices.Remove(device.Name);
@@ -74,12 +80,15 @@ namespace WinFormsApp1 {
                 AppendLog($"{device.Name} left the network.", LogType.Error, true);
             });
 
+            // when a message is received, decode it and show in the log
             _server.OnMessageRecieved = (device, payload) => SafeInvoke(() => {
                 string decoded = MorsecodeLookup.Decode(payload);
                 AppendLog($"{device.Name} -> \"{decoded}\" [{payload}]", LogType.Default);
             });
         }
 
+
+        // helper function to update the status strip with the current number of connected devices
         private void UpdateStatus() =>
             lblStatus.Text = $"{connectedDevices.Count} device(s) connected";
 
@@ -109,6 +118,8 @@ namespace WinFormsApp1 {
                     AppendLog("No devices connected - broadcast lost.", LogType.Warning, true);
                     return;
                 }
+
+                // send to all and get the number of successful sends (devices that didnt drop)
                 int sent = _server.Broadcast($"MSG:{morse}");
                 AppendLog($"HOST -> BROADCAST ({sent} devices) [{morse}]", LogType.Default);
             } else {
@@ -118,6 +129,7 @@ namespace WinFormsApp1 {
                     AppendLog($"Device \"{cbTarget.Text}\" not found.", LogType.Error);
                     return;
                 }
+                // send to the device and check if it was successful (device didnt drop)
                 bool ok = _server.SendTo(device, $"MSG:{morse}");
                 AppendLog(ok
                     ? $"HOST -> {device.Name} [{morse}]"
@@ -129,7 +141,7 @@ namespace WinFormsApp1 {
         }
 
 
-        // Load colors according to the element tags
+        // Load colors according to the element tags (unoptimisd but it works)
         private void LoadColors(Control parent) {
             List<Control> headerList = GetAllControlsWithTag(parent, "Header");
             List<Control> footerList = GetAllControlsWithTag(parent, "Footer");
@@ -190,7 +202,7 @@ namespace WinFormsApp1 {
             } else {
                 rtbLog.SelectionFont = new Font(rtbLog.Font, FontStyle.Regular);
             }
-
+            // every log entry starts with a timestamp for better readability
             rtbLog.AppendText($"[{DateTime.Now:HH:mm:ss}] {message}{Environment.NewLine}");
         }
 
@@ -206,7 +218,6 @@ namespace WinFormsApp1 {
 
 
         // manipulate the target combobox according to broadcast/direct modes
-        // TODO: needs working buggy and ugly
         private void rbBroadcast_CheckedChanged(object sender, EventArgs e) {
             cbTarget.Enabled = !rbBroadcast.Checked;
         }
@@ -214,8 +225,11 @@ namespace WinFormsApp1 {
     }
 }
 
+// UI element hierarchy (for better understanding of the code and the layout):
 
-/*  pnlTitle -> lblTitle
+/* Form1 -> pnlTitle; spltMain; statStrip
+ * 
+ * pnlTitle -> lblTitle
  * 
  *  spltMain -> Panel1 ; Panel2
  *          Panel1 -> pnlLogHeader; rtbLog
@@ -240,7 +254,6 @@ namespace WinFormsApp1 {
 +--------+-------------+------------------------------+-----------+
 | Row4   |             |                              | Button    |
 +--------+-------------+------------------------------+-----------+
- *          
- *
+ * 
  *  statStrip -> lblStatus
  */

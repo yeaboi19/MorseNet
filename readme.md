@@ -8,7 +8,8 @@ Plain text is typed on the pc - it gets encoded, transmitted as Morse and played
 
 ## Overview
 
-MorseNet bridges a windows PC and roup of ESP32 devices on the same local network. 
+MorseNet bridges a windows PC and a group of ESP32 devices on the same local network. 
+MorseNet bridges a windows PC and a group of ESP32 devices on the same local network. 
 The PC runs a TCP server that handles device registarion, keepalive watchdogging and message routing
 Each ESP32 connects as a TCP client, identifies itself with its MAC address, sends periodic ping frames carrying its RSSI signal strength, and receives `MSG:` grames containing Morse encoded payloads to play out on its hardware.
 
@@ -73,6 +74,9 @@ The **Clear** button wipes the log. Log entries can be bold (used for connect/di
 ### Device List (Top-Right panel)
 A `Listbox` showing all currently connected ESP32S by auto-generated name (`Esp-`+last 6 hex digits of MAC). 
 The list is backed by a `BindingList<ESPDevModel>` that updates in real-time as devices connect/disconnect.
+
+### Send Message (bottom-right panel)
+A `TableLayoutPanel` with four rows:
 
 - **Target** - `ComboBox` (`cbTarget`) listing all connected devices, shares the same `BindingList` as the device list so it stays in sync automatically.
 - **Mode** - `RadioButton`s to select between Direct (single target) and Broadcast (all devices) message sending.
@@ -177,7 +181,7 @@ The ESP32 side is still not yet implemented. Based on the protocol above, the fi
 - SSD1306 OLED display (I2C)
 - Passive piezo buzzer
 - RGB LED (common cathode, 3 GPIO pins)
-- Button
+- Button(s) (sending messages and controlling targets)
 - Power supply (battery)
 
 **Planned libraries:**
@@ -199,7 +203,7 @@ The ESP32 side is still not yet implemented. Based on the protocol above, the fi
 **Steps:**
 1. Clone the repository
 2. Open `WinformsApp1.sln` in Visual Studio
-3. Build the solution in **DEBUG** mode to enable the device simulator
+3. Build the solution (in **DEBUG** mode to enable the device simulator)
 4. Run the application, the server starts automatically on port `6745`
 5. To test with simulated devices, uncomment the desired scenarios in `DeviceSimulator.StartAll()` and restart the app
 

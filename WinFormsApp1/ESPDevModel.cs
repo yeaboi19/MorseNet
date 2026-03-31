@@ -23,7 +23,7 @@ namespace WinFormsApp1 {
         public int Rssi { get; set; } = 0;
 
 
-        //constructor
+        //constructor get mac and tcp client, generate name from mac
         public ESPDevModel(string mac, TcpClient client) {
             Mac = mac.ToUpper().Trim();
             Name = GenerateName(mac);
@@ -64,6 +64,8 @@ namespace WinFormsApp1 {
         // override ToString 
         public override string ToString() => $"{Name} {SignalBars} {SignalLabel}";
 
+
+        // used to generate a name from the mac address, takes last 6 chars of mac and prefix with "ESP-"
         public static string GenerateName(string mac) {
             string cleanMac = mac.Replace(":", "").Replace("-", "");
             if (cleanMac.Length >= 6) {

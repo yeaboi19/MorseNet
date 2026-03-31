@@ -38,6 +38,7 @@ namespace WinFormsApp1 {
 
             Log($"Server started. Listening on port {Port}...", LogType.Info);
 
+            // run the accept loop and watchdog loop in the background
             Task.Run(() => AcceptLoopAsync(_cts.Token));
             Task.Run(()=>WatchdogLoopAsync(_cts.Token));
         }
@@ -216,6 +217,7 @@ namespace WinFormsApp1 {
             OnDeviceDisconnected?.Invoke(device);
         }
 
+        // close the tcp connection and dispose the stream
         private static void CloseDevice(ESPDevModel device) {
             try { device.Client.Close(); } catch {/* ignore */ }
         }
@@ -244,6 +246,7 @@ namespace WinFormsApp1 {
             }
         }
 
+        // simple logger which sends the log to the UI callback
         private void Log(string msg, LogType type) => OnLog?.Invoke(msg, type);
 
         public void Dispose() {
