@@ -40,7 +40,7 @@ namespace WinFormsApp1 {
         private DeviceSimulator? _sim;
 
         private void StartSimulator() {
-            AppendLog("TEST",LogType.Info);
+            AppendLog("SIMULATION STARTED",LogType.Info, true);
             _sim = new DeviceSimulator("127.0.0.1", TcpDeviceServer.Port);
             _sim.StartAll();
         }
@@ -61,6 +61,8 @@ namespace WinFormsApp1 {
 
         //attach tcp server callbacks to UI
         private void WireServerCallbacks() {
+
+            // when the server logs something, show it in the log box
             _server.OnLog = (msg, type) => SafeInvoke(() => AppendLog(msg, type) );
 
 

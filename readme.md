@@ -9,7 +9,6 @@ Plain text is typed on the pc - it gets encoded, transmitted as Morse and played
 ## Overview
 
 MorseNet bridges a windows PC and a group of ESP32 devices on the same local network. 
-MorseNet bridges a windows PC and a group of ESP32 devices on the same local network. 
 The PC runs a TCP server that handles device registarion, keepalive watchdogging and message routing
 Each ESP32 connects as a TCP client, identifies itself with its MAC address, sends periodic ping frames carrying its RSSI signal strength, and receives `MSG:` grames containing Morse encoded payloads to play out on its hardware.
 
