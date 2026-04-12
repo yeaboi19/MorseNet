@@ -58,7 +58,7 @@ namespace WinFormsApp1 {
 
         private void Form1_Load(object sender, EventArgs e) {
             // load pretty theme :)
-            LoadColors(this);
+            Theme.LoadColors(this);
         }
 
         //attach tcp server callbacks to UI
@@ -105,6 +105,7 @@ namespace WinFormsApp1 {
 
         // send the message itself with 'send' button (with edgecases)
         private void btnSend_Click(object sender, EventArgs e) {
+            if(!_server.IsRunning) { AppendLog("Start The Server Before Sending Messages", Theme.ColWarning, true); return; }
             // some edgecases
             if (tbInput.Text == "") {
                 AppendLog("Message is empty. Please write your text", LogType.Warning, true);
@@ -142,46 +143,6 @@ namespace WinFormsApp1 {
                     );
             }
 
-        }
-
-
-        // Load colors according to the element tags (unoptimisd but it works)
-        private void LoadColors(Control parent) {
-            List<Control> headerList = GetAllControlsWithTag(parent, "Header");
-            List<Control> footerList = GetAllControlsWithTag(parent, "Footer");
-            List<Control> focusList = GetAllControlsWithTag(parent, "Focus");
-            List<Control> mainList = GetAllControlsWithTag(parent, "Main");
-
-            ApplyColors(headerList, Theme.BackgroundFocused, Theme.Foreground);
-            ApplyColors(footerList, Theme.BackgroundFocused, Theme.Foreground);
-            ApplyColors(focusList, Theme.BackgroundFocused, Theme.Foreground);
-            ApplyColors(mainList, Theme.Background, Theme.Foreground);
-        }
-
-
-        //helper function to apply the colors to elements
-        private void ApplyColors(List<Control> control, Color back, Color fore) {
-            foreach (Control c in control) {
-                c.BackColor = back;
-                c.ForeColor = fore;
-            }
-        }
-
-        // recursively searches for given tag in the parents scope and returns the list of elements
-        private List<Control> GetAllControlsWithTag(Control parent, string tag) {
-            List<Control> list = new List<Control>();
-
-            foreach (Control c in parent.Controls) {
-                c.Tag?.ToString().Split(",").ToList().ForEach(c1 => {
-                    if (c1 == tag) {
-                        list.Add(c);
-                    }
-                });
-                if (c.HasChildren) {
-                    list.AddRange(GetAllControlsWithTag(c, tag));
-                }
-            }
-            return list;
         }
 
         // helper function to write text in the rich text box - with colors :> 
@@ -226,6 +187,8 @@ namespace WinFormsApp1 {
             cbTarget.Enabled = !rbBroadcast.Checked;
         }
 
+
+        // turn on/off the server 
         private void btnServerControl_Click(object sender, EventArgs e) {
             btnServerControl.Text = _server.IsRunning ? "Start Server" : "Stop Server";
             if (_server.IsRunning) {
@@ -233,8 +196,12 @@ namespace WinFormsApp1 {
 
             } else {
                 _server.Start();
-
             }
+        }
+
+        private void btnTheme_Click(object sender, EventArgs e) {
+            Theme.Toggle();
+            Theme.LoadColors(this);
         }
     }
 }

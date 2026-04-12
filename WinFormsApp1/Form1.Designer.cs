@@ -55,6 +55,7 @@
             lblMorsePrev = new Label();
             btnSend = new Button();
             lblSendMsg = new Label();
+            btnTheme = new Button();
             pnlTitle.SuspendLayout();
             statStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)spltMain).BeginInit();
@@ -74,6 +75,7 @@
             // 
             // pnlTitle
             // 
+            pnlTitle.Controls.Add(btnTheme);
             pnlTitle.Controls.Add(btnServerControl);
             pnlTitle.Controls.Add(lblTitle);
             pnlTitle.Dock = DockStyle.Top;
@@ -423,6 +425,18 @@
             lblSendMsg.Text = "Send Message";
             lblSendMsg.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // btnTheme
+            // 
+            btnTheme.Dock = DockStyle.Right;
+            btnTheme.FlatStyle = FlatStyle.Flat;
+            btnTheme.Location = new Point(575, 0);
+            btnTheme.Name = "btnTheme";
+            btnTheme.Size = new Size(30, 30);
+            btnTheme.TabIndex = 2;
+            btnTheme.Text = "☻";
+            btnTheme.UseVisualStyleBackColor = true;
+            btnTheme.Click += btnTheme_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -489,5 +503,6 @@
         private Panel panel2;
         private Label lblDeviceList;
         private Button btnServerControl;
+        private Button btnTheme;
     }
 }
