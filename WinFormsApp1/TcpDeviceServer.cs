@@ -22,6 +22,7 @@ namespace WinFormsApp1 {
         private readonly object _lock = new(); // lock for threads and guarding _devices
         private CancellationTokenSource _cts = new(); //cleanly kill tcp services
         private bool _disposed = false; // state flag for killed tcp services
+        public bool IsRunning => _listener != null && _listener.Server.IsBound;
 
         // UI callbacks 
         public Action<ESPDevModel> OnDeviceConnected;

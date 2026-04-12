@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent() {
             pnlTitle = new Panel();
+            btnServerControl = new Button();
             lblTitle = new Label();
             statStrip = new StatusStrip();
             lblStatus = new ToolStripStatusLabel();
@@ -73,6 +74,7 @@
             // 
             // pnlTitle
             // 
+            pnlTitle.Controls.Add(btnServerControl);
             pnlTitle.Controls.Add(lblTitle);
             pnlTitle.Dock = DockStyle.Top;
             pnlTitle.Location = new Point(0, 0);
@@ -82,6 +84,19 @@
             pnlTitle.Size = new Size(724, 30);
             pnlTitle.TabIndex = 0;
             pnlTitle.Tag = "Header";
+            // 
+            // btnServerControl
+            // 
+            btnServerControl.Dock = DockStyle.Right;
+            btnServerControl.FlatStyle = FlatStyle.Flat;
+            btnServerControl.Location = new Point(605, 0);
+            btnServerControl.Name = "btnServerControl";
+            btnServerControl.Size = new Size(119, 30);
+            btnServerControl.TabIndex = 1;
+            btnServerControl.Tag = "Focus";
+            btnServerControl.Text = "Start Server";
+            btnServerControl.UseVisualStyleBackColor = true;
+            btnServerControl.Click += btnServerControl_Click;
             // 
             // lblTitle
             // 
@@ -473,5 +488,6 @@
         private Panel panel1;
         private Panel panel2;
         private Label lblDeviceList;
+        private Button btnServerControl;
     }
 }

@@ -30,7 +30,7 @@ namespace WinFormsApp1 {
             // attach tcp server callbacks to UI
             WireServerCallbacks();
 
-            _server.Start();
+            //_server.Start();
             StartSimulator(); // DEBUG FOR SIMULATING DEVICES 
         }
 
@@ -40,7 +40,7 @@ namespace WinFormsApp1 {
         private DeviceSimulator? _sim;
 
         private void StartSimulator() {
-            AppendLog("SIMULATION STARTED",LogType.Info, true);
+            AppendLog("SIMULATION STARTED", LogType.Info, true);
             _sim = new DeviceSimulator("127.0.0.1", TcpDeviceServer.Port);
             _sim.StartAll();
         }
@@ -50,6 +50,8 @@ namespace WinFormsApp1 {
             _server.Dispose();
             base.OnFormClosing(e);
         }
+#else
+        private void StartSimulator() { /* no-op in Release */ }
 #endif
         //DEBUG END
 
@@ -63,7 +65,7 @@ namespace WinFormsApp1 {
         private void WireServerCallbacks() {
 
             // when the server logs something, show it in the log box
-            _server.OnLog = (msg, type) => SafeInvoke(() => AppendLog(msg, type) );
+            _server.OnLog = (msg, type) => SafeInvoke(() => AppendLog(msg, type));
 
 
             // when a device connects, add it to the list and update the status
@@ -224,6 +226,16 @@ namespace WinFormsApp1 {
             cbTarget.Enabled = !rbBroadcast.Checked;
         }
 
+        private void btnServerControl_Click(object sender, EventArgs e) {
+            btnServerControl.Text = _server.IsRunning ? "Start Server" : "Stop Server";
+            if (_server.IsRunning) {
+                _server.Stop();
+
+            } else {
+                _server.Start();
+
+            }
+        }
     }
 }
 
