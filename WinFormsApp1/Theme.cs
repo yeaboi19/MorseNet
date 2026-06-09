@@ -6,7 +6,7 @@ using System.Drawing;
 namespace WinFormsApp1 {
     public static class Theme {
 
-        public static bool IsDark { get; private set; } = true;
+        public static bool IsDark { get; private set; } = false;
 
         public static void Toggle() => IsDark = !IsDark;
 
@@ -22,6 +22,7 @@ namespace WinFormsApp1 {
         public static Color ColWarning => IsDark ? Color.FromArgb(205, 150, 50) : Color.FromArgb(180, 120, 20);
 
         public static void LoadColors(Control parent) {
+            return;
             List<Control> headerList = GetAllControlsWithTag(parent, "Header");
             List<Control> footerList = GetAllControlsWithTag(parent, "Footer");
             List<Control> focusList = GetAllControlsWithTag(parent, "Focus");

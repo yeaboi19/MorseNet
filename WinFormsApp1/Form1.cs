@@ -31,7 +31,7 @@ namespace WinFormsApp1 {
             WireServerCallbacks();
 
             //_server.Start();
-            StartSimulator(); // DEBUG FOR SIMULATING DEVICES 
+            //StartSimulator(); // DEBUG FOR SIMULATING DEVICES 
         }
 
 
@@ -105,7 +105,7 @@ namespace WinFormsApp1 {
 
         // send the message itself with 'send' button (with edgecases)
         private void btnSend_Click(object sender, EventArgs e) {
-            if(!_server.IsRunning) { AppendLog("Start The Server Before Sending Messages", Theme.ColWarning, true); return; }
+            if (!_server.IsRunning) { AppendLog("Start The Server Before Sending Messages", Theme.ColWarning, true); return; }
             // some edgecases
             if (tbInput.Text == "") {
                 AppendLog("Message is empty. Please write your text", LogType.Warning, true);
@@ -199,9 +199,9 @@ namespace WinFormsApp1 {
             }
         }
 
-        private void btnTheme_Click(object sender, EventArgs e) {
-            Theme.Toggle();
-            Theme.LoadColors(this);
+        private void btnProvWindow_Click(object sender, EventArgs e) {
+            using var provisionInit = new ProvisionInit();
+            provisionInit.ShowDialog(this);   // modal — Form1 stays responsive when window closes
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent() {
             pnlTitle = new Panel();
+            btnProvWindow = new Button();
             btnServerControl = new Button();
             lblTitle = new Label();
             statStrip = new StatusStrip();
@@ -55,7 +56,6 @@
             lblMorsePrev = new Label();
             btnSend = new Button();
             lblSendMsg = new Label();
-            btnTheme = new Button();
             pnlTitle.SuspendLayout();
             statStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)spltMain).BeginInit();
@@ -75,7 +75,7 @@
             // 
             // pnlTitle
             // 
-            pnlTitle.Controls.Add(btnTheme);
+            pnlTitle.Controls.Add(btnProvWindow);
             pnlTitle.Controls.Add(btnServerControl);
             pnlTitle.Controls.Add(lblTitle);
             pnlTitle.Dock = DockStyle.Top;
@@ -86,6 +86,18 @@
             pnlTitle.Size = new Size(724, 30);
             pnlTitle.TabIndex = 0;
             pnlTitle.Tag = "Header";
+            // 
+            // btnProvWindow
+            // 
+            btnProvWindow.Dock = DockStyle.Right;
+            btnProvWindow.FlatStyle = FlatStyle.Flat;
+            btnProvWindow.Location = new Point(431, 0);
+            btnProvWindow.Name = "btnProvWindow";
+            btnProvWindow.Size = new Size(174, 30);
+            btnProvWindow.TabIndex = 2;
+            btnProvWindow.Text = "Open Provision Window";
+            btnProvWindow.UseVisualStyleBackColor = true;
+            btnProvWindow.Click += btnProvWindow_Click;
             // 
             // btnServerControl
             // 
@@ -425,18 +437,6 @@
             lblSendMsg.Text = "Send Message";
             lblSendMsg.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // btnTheme
-            // 
-            btnTheme.Dock = DockStyle.Right;
-            btnTheme.FlatStyle = FlatStyle.Flat;
-            btnTheme.Location = new Point(575, 0);
-            btnTheme.Name = "btnTheme";
-            btnTheme.Size = new Size(30, 30);
-            btnTheme.TabIndex = 2;
-            btnTheme.Text = "☻";
-            btnTheme.UseVisualStyleBackColor = true;
-            btnTheme.Click += btnTheme_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -503,6 +503,6 @@
         private Panel panel2;
         private Label lblDeviceList;
         private Button btnServerControl;
-        private Button btnTheme;
+        private Button btnProvWindow;
     }
 }

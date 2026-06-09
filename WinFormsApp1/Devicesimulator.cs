@@ -25,15 +25,15 @@ namespace WinFormsApp1 {
 
         public void StartAll() {
             var ct = _cts.Token;
-            //_tasks.Add(Task.Run(() => RunHealthyDevice(ct), ct));
-            //_tasks.Add(Task.Run(() => RunWeakSignalDevice(ct), ct));
-            //_tasks.Add(Task.Run(() => RunSilentDevice(ct), ct));
-            //_tasks.Add(Task.Run(() => RunSuddenDropDevice(ct), ct));
-            //_tasks.Add(Task.Run(() => RunReconnectingDevice(ct), ct));
-            //_tasks.Add(Task.Run(() => RunBadHandshakeDevice(ct), ct));
-            //_tasks.Add(Task.Run(() => RunDuplicateMacDevice(ct), ct));
-            //_tasks.Add(Task.Run(() => RunHighFrequencyDevice(ct), ct));
-            //_tasks.Add(Task.Run(() => RunEchoDevice(ct), ct));
+            _tasks.Add(Task.Run(() => RunHealthyDevice(ct), ct));
+            _tasks.Add(Task.Run(() => RunWeakSignalDevice(ct), ct));
+            _tasks.Add(Task.Run(() => RunSilentDevice(ct), ct));
+            _tasks.Add(Task.Run(() => RunSuddenDropDevice(ct), ct));
+            _tasks.Add(Task.Run(() => RunReconnectingDevice(ct), ct));
+            _tasks.Add(Task.Run(() => RunBadHandshakeDevice(ct), ct));
+            _tasks.Add(Task.Run(() => RunDuplicateMacDevice(ct), ct));
+            _tasks.Add(Task.Run(() => RunHighFrequencyDevice(ct), ct));
+            _tasks.Add(Task.Run(() => RunEchoDevice(ct), ct));
         }
 
         public void StopAll() {

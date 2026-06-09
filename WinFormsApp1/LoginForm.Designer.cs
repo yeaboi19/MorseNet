@@ -129,7 +129,7 @@
             lblError.Dock = DockStyle.Left;
             lblError.Location = new Point(0, 17);
             lblError.Name = "lblError";
-            lblError.Size = new Size(38, 35);
+            lblError.Size = new Size(226, 35);
             lblError.TabIndex = 2;
             // 
             // btnRegister
